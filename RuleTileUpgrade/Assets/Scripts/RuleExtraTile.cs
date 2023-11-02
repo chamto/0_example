@@ -5,7 +5,8 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 //유니티 Ver 2018.2.14f1 <RuleTile> => Ver 2022.3.9f1 업그레이드 작업
-namespace UnityVer2022_03_09_f1
+//namespace UnityVer2022_03_09_f1
+namespace UnityEngine
 {
     //public enum eDirection8 : int
     //{
