@@ -786,7 +786,7 @@ namespace UnityEditor
 
             Rect r = rect;
             r.x -= 20f;
-            r.y += 20f;
+            r.y += 16f;
             r.width = 20f;
             r.height = 20f;
 
@@ -828,6 +828,13 @@ namespace UnityEditor
                 GUI.changed = true;
                 Event.current.Use();
             }
+
+            //----------------------------------------------------------------------------------------
+
+            r.y += 20f;
+            string newID = EditorGUI.DelayedTextField(r, rule._specifier);
+            rule._specifier = newID.Substring(0, Mathf.Min(2, newID.Length)); //입력한 글자를 2글자로 제한한다 
+
 
             //Debug.Log(rule._border_dir);
 

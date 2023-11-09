@@ -205,8 +205,7 @@ namespace UnityEngine
             // custom 추가 정보 
             //------------------------------------------------------------------------------------------
             public int _border_dir = 0; //arrows 경계 방향이 들어간다 , eDirection8 방향값으로 변환되어 들어간다 
-
-
+            public string _specifier = "00"; //임의의 지정값 , 사용자가 인스펙터상에서 직접 지정한다
             //------------------------------------------------------------------------------------------
 
             /// <summary>
@@ -232,6 +231,8 @@ namespace UnityEngine
                     _border_dir = _border_dir,
                 };
                 Array.Copy(m_Sprites, rule.m_Sprites, m_Sprites.Length);
+                rule._specifier = string.Copy(_specifier);
+
                 return rule;
             }
 
@@ -248,6 +249,7 @@ namespace UnityEngine
 
                 return dict;
             }
+
 
             /// <summary>
             /// Applies the values from the given dictionary as this Tile's neighbors
@@ -358,6 +360,36 @@ namespace UnityEngine
             }
         }
 
+        //------------------------------------------------------------------------------------------
+        // chamto 추가 - 20231109
+
+        // custom 추가 정보 
+        //------------------------------------------------------------------------------------------
+        [Serializable]
+        public class AppointData
+        {
+
+            //public Matrix4x4 transform = Matrix4x4.identity;
+            public TilingRule tilingRule = null;
+            public int transform_dir = 0; //변형값이 적용된 arrows 경계 방향이 들어간다
+
+            public void Init()
+            {
+                //transform = Matrix4x4.identity;
+                tilingRule = null;
+                transform_dir = 0;
+            }
+
+        }
+
+        public class TileDataMap : Dictionary<Vector3Int, AppointData>
+        {
+        }
+
+        public TileDataMap _tileDataMap = new TileDataMap();
+
+        //------------------------------------------------------------------------------------------
+
         /// <summary>
         /// StartUp is called on the first frame of the running Scene.
         /// </summary>
@@ -450,6 +482,8 @@ namespace UnityEngine
                     break;
                 }
             }
+
+            //Debug.Log(""+position); //chamto test
         }
 
         /// <summary>
