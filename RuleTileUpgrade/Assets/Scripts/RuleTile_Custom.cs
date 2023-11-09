@@ -118,6 +118,8 @@ namespace UnityEngine
                 /// If it is, the rule will fail.
                 /// </summary>
                 public const int NotThis = 2;
+
+                public const int Specifier = 3; //타일링룰을 구별하는데 사용하는 문자 (최대2글자)
             }
 
             /// <summary>
@@ -206,6 +208,8 @@ namespace UnityEngine
             //------------------------------------------------------------------------------------------
             public int _border_dir = 0; //arrows 경계 방향이 들어간다 , eDirection8 방향값으로 변환되어 들어간다 
             public string _specifier = "00"; //임의의 지정값 , 사용자가 인스펙터상에서 직접 지정한다
+
+            public Dictionary<Vector3Int, string> m_Neighbors_Specifier = new Dictionary<Vector3Int, string>(); //이웃한 객체의 지정값을 나타낸다
             //------------------------------------------------------------------------------------------
 
             /// <summary>
@@ -232,6 +236,7 @@ namespace UnityEngine
                 };
                 Array.Copy(m_Sprites, rule.m_Sprites, m_Sprites.Length);
                 rule._specifier = string.Copy(_specifier);
+                rule.m_Neighbors_Specifier = new Dictionary<Vector3Int, string>(m_Neighbors_Specifier);
 
                 return rule;
             }

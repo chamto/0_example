@@ -835,10 +835,10 @@ namespace UnityEditor
             string newID = EditorGUI.DelayedTextField(r, rule._specifier);
             rule._specifier = newID.Substring(0, Mathf.Min(2, newID.Length)); //입력한 글자를 2글자로 제한한다 
 
-
             //Debug.Log(rule._border_dir);
 
         }
+
 
         /// <summary>
         /// Draws a Rule Matrix for the given Rule for a RuleTile_Custom.
@@ -891,10 +891,31 @@ namespace UnityEditor
             {
                 if (position.x != 0 || position.y != 0)
                 {
-                    if (neighbors.ContainsKey(position))
+                    bool isContain = neighbors.ContainsKey(position);
+                    if (isContain)
                     {
                         RuleOnGUI(rect, position, neighbors[position]);
                         RuleTooltipOnGUI(rect, neighbors[position]);
+
+                        //chamto 
+                        //---------------
+                        if (RuleTile_Custom.TilingRuleOutput.Neighbor.Specifier == neighbors[position])
+                        {
+
+                            if (false == tilingRule.m_Neighbors_Specifier.ContainsKey(position))
+                            {
+                                tilingRule.m_Neighbors_Specifier.Add(position, "00");
+                            }
+
+                            EditorGUI.BeginChangeCheck();
+                            string newID = EditorGUI.DelayedTextField(rect, tilingRule.m_Neighbors_Specifier[position]);
+                            if (EditorGUI.EndChangeCheck())
+                            {
+                                tilingRule.m_Neighbors_Specifier[position] = newID.Substring(0, Mathf.Min(2, newID.Length)); //두글자로 제한한다 
+                            }
+                        }
+                        //---------------
+
                     }
                     RuleNeighborUpdate(rect, tilingRule, neighbors, position);
                 }

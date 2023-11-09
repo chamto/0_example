@@ -36,7 +36,7 @@ namespace UnityEngine
 
         public class Neighbor : RuleTile_Custom.TilingRule.Neighbor
         {
-            public const int Adjacent = 3; //그리드에 인접타일 지정에 사용  
+            public const int Adjacent = 4; //그리드에 인접타일 지정에 사용  
         }
 
         //TilingRule 의 확장 정보를 가진 객체 , 상속으로 정보를 확장할 수 없어서 추가로 객체를 만듦  
