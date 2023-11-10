@@ -180,10 +180,15 @@ namespace UnityEngine
         [Serializable]
         public class TilingRule : TilingRuleOutput
         {
+            //chamto 분석 - 20231110
+            //m_Neighbors 와 m_NeighborPositions 는 같은 인덱스로 짝을 이룬다.
+            //딕셔너리를 쓰면 되는 것을 List 두개로 복잡하게 사용한다
+            //m_NeighborPositions 의 초기값은 나중에 변경된다. 위치에 대한 인덱스값이 고정이 아니다.
+            //이 또한 딕셔너리를 쓰면 고정의 인덱스값을 가지게 하며 확장 , 검색 할 수 있을 것이다 
             /// <summary>
             /// The matching Rule conditions for each of its neighboring Tiles.
             /// </summary>
-            public List<int> m_Neighbors = new List<int>();
+            public List<int> m_Neighbors = new List<int>(); 
             /// <summary>
             /// * Preset this list to RuleTile backward compatible, but not support for HexagonalRuleTile backward compatible.
             /// </summary>
