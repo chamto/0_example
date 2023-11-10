@@ -879,8 +879,14 @@ namespace UnityEditor
                 Event.current.Use();
 
                 //chamto test
-                //rule.m_Neighbors[5] = 1; //인덱스값 5 는 초기 m_NeighborPositions 리스트의 순서와 달라질 수 있다. 위치 와 인덱스값이 묶여있지 않다  
-
+                //rule.m_Neighbors[5] = 1; //인덱스값 5 는 초기 m_NeighborPositions 리스트의 순서와 달라질 수 있다. 위치 와 인덱스값이 묶여있지 않다
+                //int ct = 0;
+                //foreach (string ne in rule.m_Neighbors_Specifier.Values)
+                //{
+                //    Debug.Log(ct+"  " +ne);
+                //    ct++;
+                //}
+                
             }
 
             //----------------------------------------------------------------------------------------

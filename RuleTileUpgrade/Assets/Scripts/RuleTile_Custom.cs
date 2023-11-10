@@ -184,7 +184,8 @@ namespace UnityEngine
             //m_Neighbors 와 m_NeighborPositions 는 같은 인덱스로 짝을 이룬다.
             //딕셔너리를 쓰면 되는 것을 List 두개로 복잡하게 사용한다
             //m_NeighborPositions 의 초기값은 나중에 변경된다. 위치에 대한 인덱스값이 고정이 아니다.
-            //이 또한 딕셔너리를 쓰면 고정의 인덱스값을 가지게 하며 확장 , 검색 할 수 있을 것이다 
+            //이 또한 딕셔너리를 쓰면 고정의 인덱스값을 가지게 하며 확장 , 검색 할 수 있을 것이다
+            //딕셔너리를 안쓴이유 찾음 : 유니티에서 딕셔너리는 직렬화를 지원하지 않음 , 직렬화 지원하는 딕셔너리를 만들어 사용해야 함 
             /// <summary>
             /// The matching Rule conditions for each of its neighboring Tiles.
             /// </summary>
@@ -214,7 +215,9 @@ namespace UnityEngine
             public int _border_dir = 0; //arrows 경계 방향이 들어간다 , eDirection8 방향값으로 변환되어 들어간다 
             public string _specifier = "00"; //임의의 지정값 , 사용자가 인스펙터상에서 직접 지정한다
 
-            public Dictionary<Vector3Int, string> m_Neighbors_Specifier = new Dictionary<Vector3Int, string>(); //이웃한 객체의 지정값을 나타낸다
+            //딕셔너리는 직렬화를 지원하지 않는다. 직렬화 기능을 추가한 딕셔너리 사용하기 
+            //public Dictionary<Vector3Int, string> m_Neighbors_Specifier = new Dictionary<Vector3Int, string>(); //이웃한 객체의 지정값을 나타낸다
+            public SerializeDictionary<Vector3Int, string> m_Neighbors_Specifier = new SerializeDictionary<Vector3Int, string>(); //이웃한 객체의 지정값을 나타낸다
             //------------------------------------------------------------------------------------------
 
             /// <summary>
@@ -241,7 +244,15 @@ namespace UnityEngine
                 };
                 Array.Copy(m_Sprites, rule.m_Sprites, m_Sprites.Length);
                 rule._specifier = string.Copy(_specifier);
-                rule.m_Neighbors_Specifier = new Dictionary<Vector3Int, string>(m_Neighbors_Specifier);
+
+                //----------------------
+                //rule.m_Neighbors_Specifier = new SerializeDictionary<Vector3Int, string>(m_Neighbors_Specifier);
+                rule.m_Neighbors_Specifier = new SerializeDictionary<Vector3Int, string>();
+                foreach (KeyValuePair<Vector3Int, string> pair in m_Neighbors_Specifier)
+                {
+                    rule.m_Neighbors_Specifier.Add(pair.Key, pair.Value);
+                }
+                //----------------------
 
                 return rule;
             }
