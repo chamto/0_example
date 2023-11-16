@@ -652,7 +652,19 @@ namespace UnityEditor
                     rect.height -= 5;
                     rect.y += 6;
                     GUI.DrawTexture(rect, arrows[GetArrowIndex(position)]);
-                    break; 
+                    break;
+                case RuleTile_Custom.TilingRuleOutput.Neighbor.Adjacent:
+                    {
+                        var style1 = new GUIStyle();
+                        style1.normal.textColor = Color.yellow;
+                        style1.fontSize = 8;
+                        GUI.Label(rect, "adj", style1);
+
+                        rect.height -= 5;
+                        rect.y += 6;
+                        GUI.DrawTexture(rect, arrows[GetArrowIndex(position)]);
+                        break;
+                    }
                 default:
                     var style = new GUIStyle();
                     style.alignment = TextAnchor.MiddleCenter;
@@ -698,13 +710,14 @@ namespace UnityEditor
                 //안보이는 텍스트필드를 배치하는 이유 : 텍스트필드의 커서가 위치중, 텍스트필드가 출력중단될 경우
                 //"텍스트필드의 문자열을 가지고 인접 텍스트필드로 입력문자열을 가져가는 문제가 있음
                 //이를 해결하기 위해 보이지 않는 텍스트필드를 추가함
-                //완벽한 해결책이 아님 : 모든 격자칸에 안보이는 텍스트필드를 만들어야 문제가 발생안함 , 비효율적이기 약간의 문제를 남겨둔다 
+                //완벽한 해결책이 아님 : 모든 격자칸에 안보이는 텍스트필드를 만들어야 문제가 발생안함 ,
+                //   텍스트필드가 처음 생성될때 여전히 문제 발생함 , 유니티 자체 문제임
                 style.fontSize = 1;
                 tfRect.width -= 20;
                 tfRect.height -= 20;
             }
             else
-            {   //지정자인 경우 : 격자칸의 상단반에 텍스트필드가 배치되도록 한다 
+            {   //지정자인 경우 : 격자칸의 상단[반]에 텍스트필드가 배치되도록 한다 
                 style.fontSize = 8;
                 //tfRect.width -= 5;
                 tfRect.height -= 5;
