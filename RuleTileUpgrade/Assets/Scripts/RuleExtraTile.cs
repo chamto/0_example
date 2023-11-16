@@ -24,7 +24,6 @@ namespace UnityEngine
     //}
 
 
-
     /// <summary>
     /// This special tile add a third rule : adjacent tiles, so you can match rules with other tile than this one.
     /// See the cliff tile for an example.
@@ -36,29 +35,19 @@ namespace UnityEngine
 
         public class Neighbor : RuleTile_Custom.TilingRule.Neighbor
         {
-            public const int Adjacent = 4; //그리드에 인접타일 지정에 사용  
+            //public const int Adjacent = 4; //그리드에 인접타일 지정에 사용  
         }
+        //public TileBase[] AdjacentTiles;
 
-        //TilingRule 의 확장 정보를 가진 객체 , 상속으로 정보를 확장할 수 없어서 추가로 객체를 만듦  
-        //public class TilingRule_2
+        //public override bool RuleMatch(int neighbor, TileBase other)
         //{
-        //    public int _border_dir = 0; //arrows 경계 방향이 들어간다 , eDirection8 방향값으로 변환되어 들어간다 
+        //    switch (neighbor)
+        //    {
+        //        case Neighbor.Adjacent:
+        //            return AdjacentTiles.Contains(other);
+        //    }
+
+        //    return base.RuleMatch(neighbor, other);
         //}
-
-        //[HideInInspector] public List<TilingRule_2> m_TilingRules_2 = new List<TilingRule_2>();
-
-        public TileBase[] AdjacentTiles;
-
-        public override bool RuleMatch(int neighbor, TileBase other)
-        {
-
-            switch (neighbor)
-            {
-                case Neighbor.Adjacent:
-                    return AdjacentTiles.Contains(other);
-            }
-
-            return base.RuleMatch(neighbor, other);
-        }
     }
 }
