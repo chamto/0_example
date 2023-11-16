@@ -25,6 +25,7 @@ namespace UnityEngine
     /// <summary>
     /// Generic visual tile for creating different tilesets like terrain, pipeline, random or animated tiles.
     /// </summary>
+    [CreateAssetMenu]
     [Serializable]
     [HelpURL("https://docs.unity3d.com/Packages/com.unity.2d.tilemap.extras@latest/index.html?subfolder=/manual/RuleTile.html")]
     public class RuleTile_Custom : TileBase
@@ -56,6 +57,9 @@ namespace UnityEngine
         /// Number of rotations the RuleTile can be rotated by for matching.
         /// </summary>
         public int m_RotationCount => 360 / m_RotationAngle;
+
+
+        public TileBase[] AdjacentTiles; //그리드 상의 타일종류를 등록한다. 등록된 정보로 인접한 타일이 맞는지 검사에 사용된다 
 
         /// <summary>
         /// The data structure holding the Rule information for matching Rule Tiles with
@@ -119,7 +123,11 @@ namespace UnityEngine
                 /// </summary>
                 public const int NotThis = 2;
 
-                public const int Specifier = 3; //타일링룰을 구별하는데 사용하는 문자 (최대2글자)
+                //타일링룰을 구별하는데 사용하는 문자 (최대2글자)
+                public const int Specifier = 3; //chamto add
+
+                //그리드에 인접타일 지정에 사용
+                public const int Adjacent = 4; //chamto add
             }
 
             /// <summary>
@@ -816,6 +824,8 @@ namespace UnityEngine
             {
                 case TilingRuleOutput.Neighbor.This: return other == this;
                 case TilingRuleOutput.Neighbor.NotThis: return other != this;
+                case TilingRuleOutput.Neighbor.Adjacent:
+                    return AdjacentTiles.Contains(other);
             }
             return true;
         }
