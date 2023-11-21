@@ -692,17 +692,18 @@ namespace UnityEditor
             }
         }
 
-
+        
         //chamto 추가 - 20231111
         public virtual void RuleTextField_OnGUI(RuleTile_Custom.TilingRule tilingRule, Rect rect, Vector3Int position, int neighbor)
         {
-            
-            if (false == tilingRule.m_Neighbors_Specifier.ContainsKey(position))
-            {
-                tilingRule.m_Neighbors_Specifier.Add(position, "00");
-            }
 
-            
+            //RuleNeighborUpdate 함수에서 추가가 발생하므로 여기서 따로 처리할 필요 없음 
+            //if (false == tilingRule.m_Neighbors_bucket.ContainsKey(position))
+            //{
+            //    tilingRule.m_Neighbors_bucket.Add(position, new RuleTile_Custom.TilingRule.Neighbor_Bucket());
+            //}
+
+
             Rect tfRect = rect;
             GUIStyle style = new GUIStyle();
             if (RuleTile_Custom.TilingRuleOutput.Neighbor.Specifier != neighbor)
@@ -727,11 +728,13 @@ namespace UnityEditor
 
 
             EditorGUI.BeginChangeCheck();
-            string newID = EditorGUI.DelayedTextField(tfRect, tilingRule.m_Neighbors_Specifier[position], style);
+            var bucket = tilingRule.m_Neighbors_bucket[position];
+            string newID = EditorGUI.DelayedTextField(tfRect, bucket._specifier, style);
             //string newID = EditorGUI.TextField(tfRect, tilingRule.m_Neighbors_Specifier[position], style);
             if (EditorGUI.EndChangeCheck())
             {
-                tilingRule.m_Neighbors_Specifier[position] = newID.Substring(0, Mathf.Min(2, newID.Length)); //두글자로 제한한다
+                //tilingRule.m_Neighbors_bucket[position] = newID.Substring(0, Mathf.Min(2, newID.Length)); //두글자로 제한한다
+                tilingRule.m_Neighbors_bucket[position]._specifier = newID.Substring(0, Mathf.Min(2, newID.Length)); //두글자로 제한한다
             }
         }
 
@@ -773,8 +776,10 @@ namespace UnityEditor
         /// <param name="tilingRule">Tiling Rule to update neighbor matching rule</param>
         /// <param name="neighbors">A dictionary of neighbors</param>
         /// <param name="position">The relative position of the neighbor matching Rule</param>
-        public void RuleNeighborUpdate(Rect rect, RuleTile_Custom.TilingRule tilingRule, Dictionary<Vector3Int, int> neighbors, Vector3Int position)
+        //public void RuleNeighborUpdate(Rect rect, RuleTile_Custom.TilingRule tilingRule, Dictionary<Vector3Int, int> neighbors, Vector3Int position)
+        public void RuleNeighborUpdate(Rect rect, RuleTile_Custom.TilingRule tilingRule, Vector3Int position)
         {
+            var neighbors = tilingRule.m_Neighbors_bucket;
             if (Event.current.type == EventType.MouseDown && ContainsMousePosition(rect))
             {
                 var allConsts = tile.m_NeighborType.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
@@ -783,13 +788,13 @@ namespace UnityEditor
 
                 if (neighbors.ContainsKey(position))
                 {
-                    int oldIndex = neighborConsts.IndexOf(neighbors[position]);
+                    int oldIndex = neighborConsts.IndexOf(neighbors[position]._kind);
                     int newIndex = oldIndex + GetMouseChange();
                     //int newIndex = oldIndex  -1;
                     if (newIndex >= 0 && newIndex < neighborConsts.Count)
                     {
                         newIndex = (int)Mathf.Repeat(newIndex, neighborConsts.Count);
-                        neighbors[position] = neighborConsts[newIndex];
+                        neighbors[position]._kind = neighborConsts[newIndex];
                     }
                     else
                     {
@@ -798,10 +803,12 @@ namespace UnityEditor
                 }
                 else
                 {
-                    neighbors.Add(position, neighborConsts[GetMouseChange() == 1 ? 0 : (neighborConsts.Count - 1)]);
+                    var bucket = new RuleTile_Custom.TilingRule.Neighbor_Bucket();
+                    bucket._kind = neighborConsts[GetMouseChange() == 1 ? 0 : (neighborConsts.Count - 1)];
+                    neighbors.Add(position, bucket);
                     //neighbors.Add(position, neighborConsts[-1 == 1 ? 0 : (neighborConsts.Count - 1)]);
                 }
-                tilingRule.ApplyNeighbors(neighbors);
+                //tilingRule.ApplyNeighbors(neighbors);
 
                 GUI.changed = true;
                 Event.current.Use();
@@ -940,7 +947,8 @@ namespace UnityEditor
             }
             Handles.color = Color.white;
 
-            var neighbors = tilingRule.GetNeighbors();
+            //var neighbors = tilingRule.GetNeighbors();
+            var neighbors = tilingRule.m_Neighbors_bucket;
 
             for (int y = bounds.yMin; y < bounds.yMax; y++)
             {
@@ -948,7 +956,7 @@ namespace UnityEditor
                 {
                     Vector3Int pos = new Vector3Int(x, y, 0);
                     Rect r = new Rect(rect.xMin + (x - bounds.xMin) * w, rect.yMin + (-y + bounds.yMax - 1) * h, w - 1, h - 1);
-                    RuleMatrixIconOnGUI(tilingRule, neighbors, pos, r);
+                    RuleMatrixIconOnGUI(tilingRule, pos, r);
                 }
             }
         }
@@ -960,8 +968,11 @@ namespace UnityEditor
         /// <param name="neighbors">A dictionary of neighbors</param>
         /// <param name="position">The relative position of the neighbor matching Rule</param>
         /// <param name="rect">GUI Rect to draw icon at</param>
-        public void RuleMatrixIconOnGUI(RuleTile_Custom.TilingRule tilingRule, Dictionary<Vector3Int, int> neighbors, Vector3Int position, Rect rect)
+        //public void RuleMatrixIconOnGUI(RuleTile_Custom.TilingRule tilingRule, Dictionary<Vector3Int, int> neighbors, Vector3Int position, Rect rect)
+        public void RuleMatrixIconOnGUI(RuleTile_Custom.TilingRule tilingRule, Vector3Int position, Rect rect)
         {
+
+            var neighbors = tilingRule.m_Neighbors_bucket;
             using (var check = new EditorGUI.ChangeCheckScope())
             {
                 if (position.x != 0 || position.y != 0)
@@ -969,13 +980,13 @@ namespace UnityEditor
                     bool isContain = neighbors.ContainsKey(position);
                     if (isContain)
                     {
-                        RuleOnGUI(rect, position, neighbors[position]);
-                        RuleTooltipOnGUI(rect, neighbors[position]);
+                        RuleOnGUI(rect, position, neighbors[position]._kind);
+                        RuleTooltipOnGUI(rect, neighbors[position]._kind);
 
-                        RuleTextField_OnGUI(tilingRule, rect, position, neighbors[position]); //chamto 지정값 입력필드 출력 
+                        RuleTextField_OnGUI(tilingRule, rect, position, neighbors[position]._kind); //chamto 지정값 입력필드 출력 
 
                     }
-                    RuleNeighborUpdate(rect, tilingRule, neighbors, position);
+                    RuleNeighborUpdate(rect, tilingRule, position);
                 }
                 else
                 {

@@ -112,6 +112,8 @@ namespace UnityEngine
             /// </summary>
             public class Neighbor
             {
+                //public const int DontCare = 0;
+
                 /// <summary>
                 /// The Rule Tile will check if the contents of the cell in that direction is an instance of this Rule Tile.
                 /// If not, the rule will fail.
@@ -197,21 +199,21 @@ namespace UnityEngine
             /// <summary>
             /// The matching Rule conditions for each of its neighboring Tiles.
             /// </summary>
-            public List<int> m_Neighbors = new List<int>(); 
+            //public List<int> m_Neighbors = new List<int>(); //chamto 20231121 제거 - bucket 에 통합 
             /// <summary>
             /// * Preset this list to RuleTile backward compatible, but not support for HexagonalRuleTile backward compatible.
             /// </summary>
-            public List<Vector3Int> m_NeighborPositions = new List<Vector3Int>()
-            {
-                new Vector3Int(-1, 1, 0),
-                new Vector3Int(0, 1, 0),
-                new Vector3Int(1, 1, 0),
-                new Vector3Int(-1, 0, 0),
-                new Vector3Int(1, 0, 0),
-                new Vector3Int(-1, -1, 0),
-                new Vector3Int(0, -1, 0),
-                new Vector3Int(1, -1, 0),
-            };
+            //public List<Vector3Int> m_NeighborPositions = new List<Vector3Int>() //chamto 20231121 제거 - bucket 에 통합 
+            //{
+            //    new Vector3Int(-1, 1, 0),
+            //    new Vector3Int(0, 1, 0),
+            //    new Vector3Int(1, 1, 0),
+            //    new Vector3Int(-1, 0, 0),
+            //    new Vector3Int(1, 0, 0),
+            //    new Vector3Int(-1, -1, 0),
+            //    new Vector3Int(0, -1, 0),
+            //    new Vector3Int(1, -1, 0),
+            //};
             /// <summary>
             /// The transform matching Rule for this Rule.
             /// </summary>
@@ -225,7 +227,15 @@ namespace UnityEngine
 
             //딕셔너리는 직렬화를 지원하지 않는다. 직렬화 기능을 추가한 딕셔너리 사용하기 
             //public Dictionary<Vector3Int, string> m_Neighbors_Specifier = new Dictionary<Vector3Int, string>(); //이웃한 객체의 지정값을 나타낸다
-            public SerializeDictionary<Vector3Int, string> m_Neighbors_Specifier = new SerializeDictionary<Vector3Int, string>(); //이웃한 객체의 지정값을 나타낸다
+            public SerializeDictionary<Vector3Int, Neighbor_Bucket> m_Neighbors_bucket = new SerializeDictionary<Vector3Int, Neighbor_Bucket>(); //이웃한 객체의 지정값을 나타낸다
+
+            [Serializable]
+            public class Neighbor_Bucket
+            {
+                public int _kind = 0; //chamto - 나중에 데이터 통일시킨다.
+                public string _specifier = "00";
+            }
+
             //------------------------------------------------------------------------------------------
 
             /// <summary>
@@ -236,8 +246,8 @@ namespace UnityEngine
             {
                 TilingRule rule = new TilingRule
                 {
-                    m_Neighbors = new List<int>(m_Neighbors),
-                    m_NeighborPositions = new List<Vector3Int>(m_NeighborPositions),
+                    //m_Neighbors = new List<int>(m_Neighbors),
+                    //m_NeighborPositions = new List<Vector3Int>(m_NeighborPositions),
                     m_RuleTransform = m_RuleTransform,
                     m_Sprites = new Sprite[m_Sprites.Length],
                     m_GameObject = m_GameObject,
@@ -255,10 +265,10 @@ namespace UnityEngine
 
                 //----------------------
                 //rule.m_Neighbors_Specifier = new SerializeDictionary<Vector3Int, string>(m_Neighbors_Specifier);
-                rule.m_Neighbors_Specifier = new SerializeDictionary<Vector3Int, string>();
-                foreach (KeyValuePair<Vector3Int, string> pair in m_Neighbors_Specifier)
+                rule.m_Neighbors_bucket = new SerializeDictionary<Vector3Int, Neighbor_Bucket>();
+                foreach (KeyValuePair<Vector3Int, Neighbor_Bucket> pair in m_Neighbors_bucket)
                 {
-                    rule.m_Neighbors_Specifier.Add(pair.Key, pair.Value);
+                    rule.m_Neighbors_bucket.Add(pair.Key, pair.Value);
                 }
                 //----------------------
 
@@ -269,26 +279,26 @@ namespace UnityEngine
             /// Returns all neighbors of this Tile as a dictionary
             /// </summary>
             /// <returns>A dictionary of neighbors for this Tile</returns>
-            public Dictionary<Vector3Int, int> GetNeighbors()
-            {
-                Dictionary<Vector3Int, int> dict = new Dictionary<Vector3Int, int>();
+            //public Dictionary<Vector3Int, int> GetNeighbors()
+            //{
+            //    Dictionary<Vector3Int, int> dict = new Dictionary<Vector3Int, int>();
 
-                for (int i = 0; i < m_Neighbors.Count && i < m_NeighborPositions.Count; i++)
-                    dict.Add(m_NeighborPositions[i], m_Neighbors[i]);
+            //    for (int i = 0; i < m_Neighbors.Count && i < m_NeighborPositions.Count; i++)
+            //        dict.Add(m_NeighborPositions[i], m_Neighbors[i]);
 
-                return dict;
-            }
+            //    return dict;
+            //}
 
 
             /// <summary>
             /// Applies the values from the given dictionary as this Tile's neighbors
             /// </summary>
             /// <param name="dict">Dictionary to apply values from</param>
-            public void ApplyNeighbors(Dictionary<Vector3Int, int> dict)
-            {
-                m_NeighborPositions = dict.Keys.ToList();
-                m_Neighbors = dict.Values.ToList();
-            }
+            //public void ApplyNeighbors(Dictionary<Vector3Int, int> dict)
+            //{
+            //    m_NeighborPositions = dict.Keys.ToList();
+            //    m_Neighbors = dict.Values.ToList();
+            //}
 
             /// <summary>
             /// Gets the cell bounds of the TilingRule.
@@ -297,7 +307,8 @@ namespace UnityEngine
             public BoundsInt GetBounds()
             {
                 BoundsInt bounds = new BoundsInt(Vector3Int.zero, Vector3Int.one);
-                foreach (var neighbor in GetNeighbors())
+                //foreach (var neighbor in GetNeighbors())
+                foreach (var neighbor in m_Neighbors_bucket)
                 {
                     bounds.xMin = Mathf.Min(bounds.xMin, neighbor.Key.x);
                     bounds.yMin = Mathf.Min(bounds.yMin, neighbor.Key.y);
@@ -346,7 +357,8 @@ namespace UnityEngine
 
             foreach (TilingRule rule in m_TilingRules)
             {
-                foreach (var neighbor in rule.GetNeighbors())
+                //foreach (var neighbor in rule.GetNeighbors())
+                foreach (var neighbor in rule.m_Neighbors_bucket)
                 {
                     Vector3Int position = neighbor.Key;
                     positions.Add(position);
@@ -815,15 +827,32 @@ namespace UnityEngine
         /// <param name="neighbor">Neighbor matching rule.</param>
         /// <param name="other">Tile to match.</param>
         /// <returns>True if there is a match, False if not.</returns>
-        public virtual bool RuleMatch(int neighbor, TileBase other)
+        //public virtual bool RuleMatch(int neighbor, TilingRule.Neighbor_Bucket bucket, TileBase other)
+        public virtual bool RuleMatch(TilingRule.Neighbor_Bucket bucket, TileBase other)
         {
             if (other is RuleOverrideTile ot)
                 other = ot.m_InstanceTile;
 
-            switch (neighbor)
+            switch (bucket._kind)
             {
                 case TilingRuleOutput.Neighbor.This: return other == this;
                 case TilingRuleOutput.Neighbor.NotThis: return other != this;
+                case TilingRuleOutput.Neighbor.Specifier: 
+                    {
+                        //chamto 작업중
+                        RuleTile_Custom rule_c = other as RuleTile_Custom;
+                        if (this == other && null != rule_c)
+                        {
+                            //같은 룰타일커스톰 이어야 하며 , 동일 객체여야 한다
+                            //bucket._specifier
+                        }
+
+                        //if (null != rule_c)
+                        //{
+                        //    rule_c._
+                        //}
+                        return other != this;
+                    }
                 case TilingRuleOutput.Neighbor.Adjacent:
                     return AdjacentTiles.Contains(other);
             }
@@ -838,18 +867,39 @@ namespace UnityEngine
         /// <param name="tilemap">Tilemap to match.</param>
         /// <param name="angle">Rotation angle for matching.</param>
         /// <returns>True if there is a match, False if not.</returns>
+        //public bool old_RuleMatches(TilingRule rule, Vector3Int position, ITilemap tilemap, int angle, bool mirrorX = false)
+        //{
+        //    var minCount = Math.Min(rule.m_Neighbors.Count, rule.m_NeighborPositions.Count);
+            
+        //    for (int i = 0; i < minCount; i++)
+        //    {
+        //        var neighbor = rule.m_Neighbors[i];
+        //        var neighborPosition = rule.m_NeighborPositions[i];
+        //        var bucket = rule.m_Neighbors_bucket[neighborPosition];
+
+        //        if (mirrorX)
+        //            neighborPosition = GetMirroredPosition(neighborPosition, true, false);
+        //        var positionOffset = GetRotatedPosition(neighborPosition, angle);
+        //        var other = tilemap.GetTile(GetOffsetPosition(position, positionOffset));
+        //        if (!RuleMatch(neighbor,bucket, other))
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    return true;
+        //}
+
         public bool RuleMatches(TilingRule rule, Vector3Int position, ITilemap tilemap, int angle, bool mirrorX = false)
         {
-            var minCount = Math.Min(rule.m_Neighbors.Count, rule.m_NeighborPositions.Count);
-            for (int i = 0; i < minCount; i++)
+            foreach (var pair in rule.m_Neighbors_bucket)
             {
-                var neighbor = rule.m_Neighbors[i];
-                var neighborPosition = rule.m_NeighborPositions[i];
+                var neighborPosition = pair.Key;
+                
                 if (mirrorX)
                     neighborPosition = GetMirroredPosition(neighborPosition, true, false);
                 var positionOffset = GetRotatedPosition(neighborPosition, angle);
                 var other = tilemap.GetTile(GetOffsetPosition(position, positionOffset));
-                if (!RuleMatch(neighbor, other))
+                if (!RuleMatch(pair.Value, other))
                 {
                     return false;
                 }
@@ -866,15 +916,36 @@ namespace UnityEngine
         /// <param name="mirrorX">Mirror X Axis for matching.</param>
         /// <param name="mirrorY">Mirror Y Axis for matching.</param>
         /// <returns>True if there is a match, False if not.</returns>
+        //public bool old_RuleMatches(TilingRule rule, Vector3Int position, ITilemap tilemap, bool mirrorX, bool mirrorY)
+        //{
+        //    var minCount = Math.Min(rule.m_Neighbors.Count, rule.m_NeighborPositions.Count);
+        //    for (int i = 0; i < minCount; i++)
+        //    {
+        //        int neighbor = rule.m_Neighbors[i];
+        //        var neighborPosition = rule.m_NeighborPositions[i];
+        //        var bucket = rule.m_Neighbors_bucket[neighborPosition];
+
+        //        Vector3Int positionOffset = GetMirroredPosition(rule.m_NeighborPositions[i], mirrorX, mirrorY);
+        //        TileBase other = tilemap.GetTile(GetOffsetPosition(position, positionOffset));
+        //        if (!RuleMatch(neighbor,bucket, other))
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    return true;
+        //}
         public bool RuleMatches(TilingRule rule, Vector3Int position, ITilemap tilemap, bool mirrorX, bool mirrorY)
         {
-            var minCount = Math.Min(rule.m_Neighbors.Count, rule.m_NeighborPositions.Count);
-            for (int i = 0; i < minCount; i++)
+            //var minCount = Math.Min(rule.m_Neighbors.Count, rule.m_NeighborPositions.Count);
+            //for (int i = 0; i < minCount; i++)
+
+            foreach (var pair in rule.m_Neighbors_bucket)
             {
-                int neighbor = rule.m_Neighbors[i];
-                Vector3Int positionOffset = GetMirroredPosition(rule.m_NeighborPositions[i], mirrorX, mirrorY);
+                var neighborPosition = pair.Key;
+                
+                Vector3Int positionOffset = GetMirroredPosition(neighborPosition, mirrorX, mirrorY);
                 TileBase other = tilemap.GetTile(GetOffsetPosition(position, positionOffset));
-                if (!RuleMatch(neighbor, other))
+                if (!RuleMatch(pair.Value, other))
                 {
                     return false;
                 }
