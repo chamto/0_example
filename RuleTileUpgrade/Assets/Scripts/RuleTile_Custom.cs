@@ -232,7 +232,7 @@ namespace UnityEngine
             [Serializable]
             public class Neighbor_Bucket
             {
-                public int _kind = 0; //chamto - 나중에 데이터 통일시킨다.
+                public int _kind = 0; 
                 public string _specifier = "00";
             }
 
@@ -410,21 +410,110 @@ namespace UnityEngine
         public class AppointData
         {
 
-            //public Matrix4x4 transform = Matrix4x4.identity;
-            public TilingRule tilingRule = null;
-            public int transform_dir = 0; //변형값이 적용된 arrows 경계 방향이 들어간다
+            public Matrix4x4 _transform = Matrix4x4.identity;
+            public TilingRule _tilingRule = null;
+            public Vector3 _ndir8 = Vector3.zero; //변형값이 적용된 arrows 경계 방향이 들어간다
 
             public void Init()
             {
-                //transform = Matrix4x4.identity;
-                tilingRule = null;
-                transform_dir = 0;
+                _transform = Matrix4x4.identity;
+                _tilingRule = null;
+                _ndir8 = Vector3.zero;
+            }
+
+            //public enum eDirection8 : int
+            //{
+            //    none = 0,
+            //    center = none,
+            //    right = 1,
+            //    rightUp = 2,
+            //    up = 3,
+            //    leftUp = 4,
+            //    left = 5,
+            //    leftDown = 6,
+            //    down = 7,
+            //    rightDown = 8,
+            //    max,
+            //}
+            //-z축 기준 
+            private Vector3[] _dir8_normal3D_AxisMZ = new Vector3[]
+            {   new Vector3(0,0,0) ,                //    zero = 0, 
+            new Vector3(1,0,0).normalized ,     //    right = 1, 
+            new Vector3(1,1,0).normalized ,     //    rightUp = 2, 
+            new Vector3(0,1,0).normalized ,     //    up = 3,
+            new Vector3(-1,1,0).normalized ,    //    leftUp = 4,
+            new Vector3(-1,0,0).normalized ,    //    left = 5,
+            new Vector3(-1,-1,0).normalized ,   //    leftDown = 6,
+            new Vector3(0,-1,0).normalized ,    //    down = 7,
+            new Vector3(1,-1,0).normalized ,    //    rightDown = 8,
+            new Vector3(1,0,0).normalized ,     //    right = 9,
+            };
+
+            public Vector3 GetDir8_Normal3D_AxisMZ(int eDirection)
+            {
+                return _dir8_normal3D_AxisMZ[(int)eDirection];
+            }
+
+            
+            public void ApplyData()
+            {
+                if (null == _tilingRule) return;
+
+                Vector3 n = GetDir8_Normal3D_AxisMZ(_tilingRule._border_dir);
+                _ndir8 = _transform * n;
+                
             }
 
         }
 
         public class TileDataMap : Dictionary<Vector3Int, AppointData>
         {
+            public void InitData(Vector3Int position)
+            {
+                AppointData getData = null;
+                if (false == this.TryGetValue(position, out getData))
+                {
+                    return;
+                }
+
+                getData.Init();
+            }
+
+            public void AddOrUpdate(Vector3Int position, AppointData data)
+            {
+                AppointData getData = null;
+                if (false == this.TryGetValue(position, out getData))
+                {
+                    this.Add(position, data);
+                }
+                this[position] = data;
+
+                if (null != data)
+                    data.ApplyData();
+            }
+
+            public void AddOrUpdate(Vector3Int position, TilingRule rule, Matrix4x4 transform)
+            {
+                AppointData getData = null;
+                if (false == this.TryGetValue(position, out getData))
+                {
+                    getData = new AppointData();
+                    getData.Init();
+                    this.Add(position, getData);
+                }
+
+                //위치만 있고 알맹이가 없는 경우 
+                if (null == getData)
+                {
+                    getData = new AppointData();
+                    getData.Init();
+                    this.Add(position, getData);
+                }
+
+                getData._transform = transform;
+                getData._tilingRule = rule;
+                getData.ApplyData();
+            }
         }
 
         public TileDataMap _tileDataMap = new TileDataMap();
@@ -499,6 +588,9 @@ namespace UnityEngine
             tileData.flags = TileFlags.LockTransform;
             tileData.transform = iden;
 
+            //** 기록 초기화 
+            _tileDataMap.InitData(position);
+
             Matrix4x4 transform = iden;
             foreach (TilingRule rule in m_TilingRules)
             {
@@ -520,6 +612,11 @@ namespace UnityEngine
                     tileData.transform = transform;
                     tileData.gameObject = rule.m_GameObject;
                     tileData.colliderType = rule.m_ColliderType;
+                    
+
+                    //** 어떤 규칙이 어느 위치로 들어갔는지 기록 
+                    _tileDataMap.AddOrUpdate(position, rule, transform);
+
                     break;
                 }
             }
@@ -828,7 +925,7 @@ namespace UnityEngine
         /// <param name="other">Tile to match.</param>
         /// <returns>True if there is a match, False if not.</returns>
         //public virtual bool RuleMatch(int neighbor, TilingRule.Neighbor_Bucket bucket, TileBase other)
-        public virtual bool RuleMatch(TilingRule.Neighbor_Bucket bucket, TileBase other)
+        public virtual bool RuleMatch(TilingRule.Neighbor_Bucket bucket, Vector3Int position, TileBase other)
         {
             if (other is RuleOverrideTile ot)
                 other = ot.m_InstanceTile;
@@ -839,19 +936,26 @@ namespace UnityEngine
                 case TilingRuleOutput.Neighbor.NotThis: return other != this;
                 case TilingRuleOutput.Neighbor.Specifier: 
                     {
-                        //chamto 작업중
-                        RuleTile_Custom rule_c = other as RuleTile_Custom;
-                        if (this == other && null != rule_c)
+                        
+                        RuleTile_Custom rule_c_other = other as RuleTile_Custom;
+                        if (null != rule_c_other && this == rule_c_other)
                         {
                             //같은 룰타일커스톰 이어야 하며 , 동일 객체여야 한다
-                            //bucket._specifier
-                        }
 
-                        //if (null != rule_c)
-                        //{
-                        //    rule_c._
-                        //}
-                        return other != this;
+                            if (true == rule_c_other._tileDataMap.ContainsKey(position))
+                            {
+                                //위치기록은 되어있는데 데이터가 없는 경우 
+                                if (null == rule_c_other._tileDataMap[position]._tilingRule)
+                                    return false;
+
+                                //지정자를 비교한다
+                                //Debug.Log("ddfdfdf");
+                                if (bucket._specifier == rule_c_other._tileDataMap[position]._tilingRule._specifier)
+                                    return true;
+                            }
+
+                        }
+                        return false;
                     }
                 case TilingRuleOutput.Neighbor.Adjacent:
                     return AdjacentTiles.Contains(other);
@@ -899,7 +1003,7 @@ namespace UnityEngine
                     neighborPosition = GetMirroredPosition(neighborPosition, true, false);
                 var positionOffset = GetRotatedPosition(neighborPosition, angle);
                 var other = tilemap.GetTile(GetOffsetPosition(position, positionOffset));
-                if (!RuleMatch(pair.Value, other))
+                if (!RuleMatch(pair.Value,position, other))
                 {
                     return false;
                 }
@@ -945,7 +1049,7 @@ namespace UnityEngine
                 
                 Vector3Int positionOffset = GetMirroredPosition(neighborPosition, mirrorX, mirrorY);
                 TileBase other = tilemap.GetTile(GetOffsetPosition(position, positionOffset));
-                if (!RuleMatch(pair.Value, other))
+                if (!RuleMatch(pair.Value,position, other))
                 {
                     return false;
                 }
@@ -1011,6 +1115,31 @@ namespace UnityEngine
         public virtual Vector3Int GetOffsetPositionReverse(Vector3Int position, Vector3Int offset)
         {
             return position - offset;
+        }
+
+        public void Debug_TileDataMap()
+        {
+            foreach (var pair in _tileDataMap)
+            {
+                string temp = "";
+                var t_rule = pair.Value._tilingRule;
+                if (null != t_rule)
+                    temp += t_rule._specifier;
+                PrintText(pair.Key, Color.white, ""+pair.Key + "  " + temp);
+                //pair.
+            }
+        }
+
+        public void PrintText(Vector3 pos, Color cc, string text)
+        {
+#if UNITY_EDITOR
+            GUIStyle style = new GUIStyle();
+            style.normal.textColor = cc;
+
+            UnityEditor.Handles.BeginGUI();
+            UnityEditor.Handles.Label(pos, text, style);
+            UnityEditor.Handles.EndGUI();
+#endif
         }
     }
 }
