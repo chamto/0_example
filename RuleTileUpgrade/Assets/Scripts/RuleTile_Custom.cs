@@ -232,7 +232,8 @@ namespace UnityEngine
             [Serializable]
             public class Neighbor_Bucket
             {
-                public int _kind = 0; 
+                public Vector3Int _posotion = Vector3Int.zero;
+                public int _kind = 0;
                 public string _specifier = "00";
             }
 
@@ -409,13 +410,14 @@ namespace UnityEngine
         [Serializable]
         public class AppointData
         {
-
+            //public int _idx = -1; //추가된 순서 - 테스트/
             public Matrix4x4 _transform = Matrix4x4.identity;
             public TilingRule _tilingRule = null;
             public Vector3 _ndir8 = Vector3.zero; //변형값이 적용된 arrows 경계 방향이 들어간다
 
             public void Init()
             {
+                //_idx = -1;
                 _transform = Matrix4x4.identity;
                 _tilingRule = null;
                 _ndir8 = Vector3.zero;
@@ -468,6 +470,8 @@ namespace UnityEngine
 
         public class TileDataMap : Dictionary<Vector3Int, AppointData>
         {
+            //private int _count = 0;
+
             public void InitData(Vector3Int position)
             {
                 AppointData getData = null;
@@ -481,9 +485,12 @@ namespace UnityEngine
 
             public void AddOrUpdate(Vector3Int position, AppointData data)
             {
+                
                 AppointData getData = null;
                 if (false == this.TryGetValue(position, out getData))
                 {
+                    //_count++;
+                    //data._idx = _count;
                     this.Add(position, data);
                 }
                 this[position] = data;
@@ -494,11 +501,14 @@ namespace UnityEngine
 
             public void AddOrUpdate(Vector3Int position, TilingRule rule, Matrix4x4 transform)
             {
+                
                 AppointData getData = null;
                 if (false == this.TryGetValue(position, out getData))
                 {
                     getData = new AppointData();
                     getData.Init();
+                    //_count++;
+                    //getData._idx = _count;
                     this.Add(position, getData);
                 }
 
@@ -507,6 +517,8 @@ namespace UnityEngine
                 {
                     getData = new AppointData();
                     getData.Init();
+                    //_count++;
+                    //getData._idx = _count;
                     this.Add(position, getData);
                 }
 
@@ -1125,8 +1137,8 @@ namespace UnityEngine
                 var t_rule = pair.Value._tilingRule;
                 if (null != t_rule)
                     temp += t_rule._specifier;
-                PrintText(pair.Key, Color.white, ""+pair.Key + "  " + temp);
-                //pair.
+                //PrintText(pair.Key, Color.white, ""+ pair.Value._idx + " - " + temp);
+                
             }
         }
 

@@ -804,6 +804,7 @@ namespace UnityEditor
                 else
                 {
                     var bucket = new RuleTile_Custom.TilingRule.Neighbor_Bucket();
+                    bucket._posotion = position;
                     bucket._kind = neighborConsts[GetMouseChange() == 1 ? 0 : (neighborConsts.Count - 1)];
                     neighbors.Add(position, bucket);
                     //neighbors.Add(position, neighborConsts[-1 == 1 ? 0 : (neighborConsts.Count - 1)]);
