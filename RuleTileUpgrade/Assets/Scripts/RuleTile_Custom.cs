@@ -937,7 +937,7 @@ namespace UnityEngine
         /// <param name="other">Tile to match.</param>
         /// <returns>True if there is a match, False if not.</returns>
         //public virtual bool RuleMatch(int neighbor, TilingRule.Neighbor_Bucket bucket, TileBase other)
-        public virtual bool RuleMatch(TilingRule.Neighbor_Bucket bucket, Vector3Int position, TileBase other)
+        public virtual bool RuleMatch(TilingRule.Neighbor_Bucket bucket, Vector3Int neighbor_worldPos, TileBase other)
         {
             if (other is RuleOverrideTile ot)
                 other = ot.m_InstanceTile;
@@ -954,15 +954,15 @@ namespace UnityEngine
                         {
                             //같은 룰타일커스톰 이어야 하며 , 동일 객체여야 한다
 
-                            if (true == rule_c_other._tileDataMap.ContainsKey(position))
+                            if (true == rule_c_other._tileDataMap.ContainsKey(neighbor_worldPos))
                             {
                                 //위치기록은 되어있는데 데이터가 없는 경우 
-                                if (null == rule_c_other._tileDataMap[position]._tilingRule)
+                                if (null == rule_c_other._tileDataMap[neighbor_worldPos]._tilingRule)
                                     return false;
 
                                 //지정자를 비교한다
                                 //Debug.Log("ddfdfdf");
-                                if (bucket._specifier == rule_c_other._tileDataMap[position]._tilingRule._specifier)
+                                if (bucket._specifier == rule_c_other._tileDataMap[neighbor_worldPos]._tilingRule._specifier)
                                     return true;
                             }
 
@@ -1014,8 +1014,9 @@ namespace UnityEngine
                 if (mirrorX)
                     neighborPosition = GetMirroredPosition(neighborPosition, true, false);
                 var positionOffset = GetRotatedPosition(neighborPosition, angle);
-                var other = tilemap.GetTile(GetOffsetPosition(position, positionOffset));
-                if (!RuleMatch(pair.Value,position, other))
+                Vector3Int neighbor_worldPos = GetOffsetPosition(position, positionOffset);
+                var other = tilemap.GetTile(neighbor_worldPos);
+                if (!RuleMatch(pair.Value, neighbor_worldPos, other))
                 {
                     return false;
                 }
@@ -1060,8 +1061,9 @@ namespace UnityEngine
                 var neighborPosition = pair.Key;
                 
                 Vector3Int positionOffset = GetMirroredPosition(neighborPosition, mirrorX, mirrorY);
-                TileBase other = tilemap.GetTile(GetOffsetPosition(position, positionOffset));
-                if (!RuleMatch(pair.Value,position, other))
+                Vector3Int neighbor_worldPos = GetOffsetPosition(position, positionOffset);
+                TileBase other = tilemap.GetTile(neighbor_worldPos);
+                if (!RuleMatch(pair.Value, neighbor_worldPos, other))
                 {
                     return false;
                 }
