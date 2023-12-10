@@ -647,11 +647,17 @@ namespace UnityEditor
                 case RuleTile_Custom.TilingRuleOutput.Neighbor.NotThis:
                     GUI.DrawTexture(rect, arrows[9]);
                     break;
-                case RuleTile_Custom.TilingRuleOutput.Neighbor.Specifier:
+                case RuleTile_Custom.TilingRuleOutput.Neighbor.Specifier_This:
                     //반으로 줄여서 출력 [반위: 지정자명 , 반아래: 방향GUI]
                     rect.height -= 5;
                     rect.y += 6;
                     GUI.DrawTexture(rect, arrows[GetArrowIndex(position)]);
+                    break;
+                case RuleTile_Custom.TilingRuleOutput.Neighbor.Specifier_NotThis:
+                    //반으로 줄여서 출력 [반위: 지정자명 , 반아래: 방향GUI]
+                    rect.height -= 5;
+                    rect.y += 6;
+                    GUI.DrawTexture(rect, arrows[9]);
                     break;
                 case RuleTile_Custom.TilingRuleOutput.Neighbor.Adjacent:
                     {
@@ -706,7 +712,15 @@ namespace UnityEditor
 
             Rect tfRect = rect;
             GUIStyle style = new GUIStyle();
-            if (RuleTile_Custom.TilingRuleOutput.Neighbor.Specifier != neighbor)
+            if (RuleTile_Custom.TilingRuleOutput.Neighbor.Specifier_This == neighbor ||
+                RuleTile_Custom.TilingRuleOutput.Neighbor.Specifier_NotThis == neighbor)
+            {   //지정자인 경우 : 격자칸의 상단[반]에 텍스트필드가 배치되도록 한다 
+                style.fontSize = 8;
+                //tfRect.width -= 5;
+                tfRect.height -= 5;
+                style.normal.textColor = Color.white;
+
+            }else
             {   //지정자가 아닐 경우 (일반) : 텍스트필드가 안보이게 크기를 줄여 배치한다
                 //안보이는 텍스트필드를 배치하는 이유 : 텍스트필드의 커서가 위치중, 텍스트필드가 출력중단될 경우
                 //"텍스트필드의 문자열을 가지고 인접 텍스트필드로 입력문자열을 가져가는 문제가 있음
@@ -717,14 +731,7 @@ namespace UnityEditor
                 tfRect.width -= 20;
                 tfRect.height -= 20;
             }
-            else
-            {   //지정자인 경우 : 격자칸의 상단[반]에 텍스트필드가 배치되도록 한다 
-                style.fontSize = 8;
-                //tfRect.width -= 5;
-                tfRect.height -= 5;
-                style.normal.textColor = Color.white;
-
-            }
+            
 
 
             EditorGUI.BeginChangeCheck();

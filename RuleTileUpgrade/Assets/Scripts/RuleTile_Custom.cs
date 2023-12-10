@@ -126,10 +126,12 @@ namespace UnityEngine
                 public const int NotThis = 2;
 
                 //타일링룰을 구별하는데 사용하는 문자 (최대2글자)
-                public const int Specifier = 3; //chamto add
+                public const int Specifier_This = 3; //chamto add
+
+                public const int Specifier_NotThis = 4; //chamto add
 
                 //그리드에 인접타일 지정에 사용
-                public const int Adjacent = 4; //chamto add
+                public const int Adjacent = 5; //chamto add
             }
 
             /// <summary>
@@ -946,14 +948,13 @@ namespace UnityEngine
             {
                 case TilingRuleOutput.Neighbor.This: return other == this;
                 case TilingRuleOutput.Neighbor.NotThis: return other != this;
-                case TilingRuleOutput.Neighbor.Specifier: 
+                case TilingRuleOutput.Neighbor.Specifier_This: 
                     {
                         
                         RuleTile_Custom rule_c_other = other as RuleTile_Custom;
                         if (null != rule_c_other && this == rule_c_other)
                         {
                             //같은 룰타일커스톰 이어야 하며 , 동일 객체여야 한다
-
                             if (true == rule_c_other._tileDataMap.ContainsKey(neighbor_worldPos))
                             {
                                 //위치기록은 되어있는데 데이터가 없는 경우 
@@ -961,13 +962,33 @@ namespace UnityEngine
                                     return false;
 
                                 //지정자를 비교한다
-                                //Debug.Log("ddfdfdf");
                                 if (bucket._specifier == rule_c_other._tileDataMap[neighbor_worldPos]._tilingRule._specifier)
                                     return true;
                             }
 
                         }
                         return false;
+                    }
+                case TilingRuleOutput.Neighbor.Specifier_NotThis:
+                    {
+
+                        RuleTile_Custom rule_c_other = other as RuleTile_Custom;
+                        if (null != rule_c_other && this == rule_c_other)
+                        {
+                            //같은 룰타일커스톰 이어야 하며 , 동일 객체여야 한다
+                            if (true == rule_c_other._tileDataMap.ContainsKey(neighbor_worldPos))
+                            {
+                                //위치기록은 되어있는데 데이터가 없는 경우 
+                                if (null == rule_c_other._tileDataMap[neighbor_worldPos]._tilingRule)
+                                    return true;
+
+                                //지정자를 비교한다
+                                if (bucket._specifier == rule_c_other._tileDataMap[neighbor_worldPos]._tilingRule._specifier)
+                                    return false;
+                            }
+
+                        }
+                        return true;
                     }
                 case TilingRuleOutput.Neighbor.Adjacent:
                     return AdjacentTiles.Contains(other);
