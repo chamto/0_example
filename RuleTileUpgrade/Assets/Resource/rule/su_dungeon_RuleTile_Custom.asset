@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8d60c373f4de41749d9c5b7ba23c4a9, type: 3}
-  m_Name: su_dungeon_RuleExtraTile
+  m_Script: {fileID: 11500000, guid: 921532b6a55814840899895428e84040, type: 3}
+  m_Name: su_dungeon_RuleTile_Custom
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: -1578490750, guid: f3951d20c8adb41f7a2e65e710121f7d, type: 3}
+  m_DefaultSprite: {fileID: 21300000, guid: 871a7f17563994eefb081dfd61b43695, type: 3}
   m_DefaultGameObject: {fileID: 0}
-  m_DefaultColliderType: 0
+  m_DefaultColliderType: 1
   AdjacentTiles: []
   m_TilingRules:
   - m_Id: 0
@@ -37,13 +37,17 @@ MonoBehaviour:
       - {x: 0, y: -1, z: 0}
       - {x: 1, y: 0, z: 0}
       values:
-      - _kind: 2
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 2
         _specifier: 00
-      - _kind: 2
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 2
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
   - m_Id: 1
     m_Sprites:
@@ -67,17 +71,23 @@ MonoBehaviour:
       - {x: 1, y: -1, z: 0}
       - {x: 1, y: 0, z: 0}
       values:
-      - _kind: 2
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 2
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
   - m_Id: 10
     m_Sprites:
@@ -91,22 +101,30 @@ MonoBehaviour:
     m_RandomTransform: 0
     m_RuleTransform: 2
     _border_dir: 6
-    _specifier: 00
+    _specifier: L5
     m_Neighbors_bucket:
       keys:
       - {x: 0, y: -1, z: 0}
-      - {x: 0, y: -2, z: 0}
-      - {x: 0, y: -3, z: 0}
-      - {x: -1, y: -2, z: 0}
+      - {x: 1, y: -1, z: 0}
+      - {x: 1, y: 0, z: 0}
+      - {x: 0, y: 1, z: 0}
+      - {x: -1, y: -1, z: 0}
       values:
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 3
+        _specifier: s4
+      - _posotion: {x: 1, y: -1, z: 0}
+        _kind: 1
+        _specifier: s4
+      - _posotion: {x: 1, y: 0, z: 0}
+        _kind: 4
+        _specifier: s4
+      - _posotion: {x: 0, y: 1, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
-        _specifier: 00
-      - _kind: 2
-        _specifier: 00
-      - _kind: 2
-        _specifier: 00
+      - _posotion: {x: -1, y: -1, z: 0}
+        _kind: 4
+        _specifier: s4
   - m_Id: 9
     m_Sprites:
     - {fileID: 120072010, guid: f3951d20c8adb41f7a2e65e710121f7d, type: 3}
@@ -119,28 +137,26 @@ MonoBehaviour:
     m_RandomTransform: 0
     m_RuleTransform: 2
     _border_dir: 0
-    _specifier: 00
+    _specifier: s4
     m_Neighbors_bucket:
       keys:
       - {x: 0, y: 1, z: 0}
       - {x: 0, y: -1, z: 0}
       - {x: 1, y: 0, z: 0}
       - {x: 1, y: -1, z: 0}
-      - {x: -1, y: -1, z: 0}
-      - {x: 0, y: -2, z: 0}
       values:
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 3
+        _specifier: s5
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
-        _specifier: 00
-      - _kind: 1
-        _specifier: 00
-      - _kind: 2
-        _specifier: 00
-      - _kind: 2
-        _specifier: 00
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
+        _specifier: s2
   - m_Id: 2
     m_Sprites:
     - {fileID: -1125526636, guid: f3951d20c8adb41f7a2e65e710121f7d, type: 3}
@@ -153,7 +169,7 @@ MonoBehaviour:
     m_RandomTransform: 0
     m_RuleTransform: 2
     _border_dir: 6
-    _specifier: 00
+    _specifier: s5
     m_Neighbors_bucket:
       keys:
       - {x: -1, y: 0, z: 0}
@@ -162,148 +178,20 @@ MonoBehaviour:
       - {x: 1, y: 1, z: 0}
       - {x: 1, y: 0, z: 0}
       values:
-      - _kind: 2
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 2
         _specifier: 00
-      - _kind: 2
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 2
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
+        _specifier: s2
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
-        _specifier: 00
-      - _kind: 1
-        _specifier: 00
-  - m_Id: 11
-    m_Sprites:
-    - {fileID: 431645857, guid: f3951d20c8adb41f7a2e65e710121f7d, type: 3}
-    m_GameObject: {fileID: 0}
-    m_MinAnimationSpeed: 1
-    m_MaxAnimationSpeed: 1
-    m_PerlinScale: 0.5
-    m_Output: 0
-    m_ColliderType: 0
-    m_RandomTransform: 0
-    m_RuleTransform: 0
-    _border_dir: 3
-    _specifier: 00
-    m_Neighbors_bucket:
-      keys:
-      - {x: 0, y: 1, z: 0}
-      - {x: -1, y: 0, z: 0}
-      - {x: -1, y: -1, z: 0}
-      - {x: 0, y: -1, z: 0}
-      - {x: 1, y: -1, z: 0}
-      - {x: 1, y: 0, z: 0}
-      - {x: 0, y: -2, z: 0}
-      values:
-      - _kind: 1
-        _specifier: 00
-      - _kind: 1
-        _specifier: 00
-      - _kind: 1
-        _specifier: 00
-      - _kind: 1
-        _specifier: 00
-      - _kind: 1
-        _specifier: 00
-      - _kind: 1
-        _specifier: 00
-      - _kind: 2
-        _specifier: 00
-  - m_Id: 3
-    m_Sprites:
-    - {fileID: 263148730, guid: f3951d20c8adb41f7a2e65e710121f7d, type: 3}
-    m_GameObject: {fileID: 0}
-    m_MinAnimationSpeed: 1
-    m_MaxAnimationSpeed: 1
-    m_PerlinScale: 0.5
-    m_Output: 0
-    m_ColliderType: 0
-    m_RandomTransform: 0
-    m_RuleTransform: 0
-    _border_dir: 7
-    _specifier: 00
-    m_Neighbors_bucket:
-      keys:
-      - {x: 0, y: -1, z: 0}
-      - {x: -1, y: 0, z: 0}
-      - {x: -1, y: 1, z: 0}
-      - {x: 0, y: 1, z: 0}
-      - {x: 1, y: 1, z: 0}
-      - {x: 1, y: 0, z: 0}
-      values:
-      - _kind: 2
-        _specifier: 00
-      - _kind: 1
-        _specifier: 00
-      - _kind: 1
-        _specifier: 00
-      - _kind: 1
-        _specifier: 00
-      - _kind: 1
-        _specifier: 00
-      - _kind: 1
-        _specifier: 00
-  - m_Id: 4
-    m_Sprites:
-    - {fileID: -2097993579, guid: f3951d20c8adb41f7a2e65e710121f7d, type: 3}
-    m_GameObject: {fileID: 0}
-    m_MinAnimationSpeed: 1
-    m_MaxAnimationSpeed: 1
-    m_PerlinScale: 0.5
-    m_Output: 0
-    m_ColliderType: 0
-    m_RandomTransform: 0
-    m_RuleTransform: 2
-    _border_dir: 0
-    _specifier: 00
-    m_Neighbors_bucket:
-      keys:
-      - {x: 0, y: -1, z: 0}
-      - {x: -1, y: -1, z: 0}
-      - {x: -1, y: 0, z: 0}
-      - {x: -1, y: 1, z: 0}
-      - {x: 0, y: 1, z: 0}
-      - {x: 1, y: 1, z: 0}
-      - {x: 0, y: -2, z: 0}
-      values:
-      - _kind: 1
-        _specifier: 00
-      - _kind: 2
-        _specifier: 00
-      - _kind: 1
-        _specifier: 00
-      - _kind: 1
-        _specifier: 00
-      - _kind: 1
-        _specifier: 00
-      - _kind: 1
-        _specifier: 00
-      - _kind: 1
-        _specifier: 00
-  - m_Id: 5
-    m_Sprites:
-    - {fileID: -1870478748, guid: f3951d20c8adb41f7a2e65e710121f7d, type: 3}
-    m_GameObject: {fileID: 0}
-    m_MinAnimationSpeed: 1
-    m_MaxAnimationSpeed: 1
-    m_PerlinScale: 0.5
-    m_Output: 0
-    m_ColliderType: 2
-    m_RandomTransform: 0
-    m_RuleTransform: 2
-    _border_dir: 5
-    _specifier: 00
-    m_Neighbors_bucket:
-      keys:
-      - {x: -1, y: 0, z: 0}
-      - {x: 0, y: 1, z: 0}
-      - {x: 0, y: -1, z: 0}
-      values:
-      - _kind: 2
-        _specifier: 00
-      - _kind: 1
-        _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
   - m_Id: 6
     m_Sprites:
@@ -320,21 +208,174 @@ MonoBehaviour:
     _specifier: 00
     m_Neighbors_bucket:
       keys:
+      - {x: 1, y: 0, z: 0}
+      - {x: 0, y: -1, z: 0}
+      - {x: -1, y: 0, z: 0}
+      - {x: -1, y: -1, z: 0}
+      - {x: 0, y: 1, z: 0}
+      values:
+      - _posotion: {x: 1, y: 0, z: 0}
+        _kind: 4
+        _specifier: s4
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 3
+        _specifier: L5
+      - _posotion: {x: -1, y: 0, z: 0}
+        _kind: 3
+        _specifier: s4
+      - _posotion: {x: -1, y: -1, z: 0}
+        _kind: 1
+        _specifier: 00
+      - _posotion: {x: 0, y: 1, z: 0}
+        _kind: 1
+        _specifier: 00
+  - m_Id: 4
+    m_Sprites:
+    - {fileID: -2097993579, guid: f3951d20c8adb41f7a2e65e710121f7d, type: 3}
+    m_GameObject: {fileID: 0}
+    m_MinAnimationSpeed: 1
+    m_MaxAnimationSpeed: 1
+    m_PerlinScale: 0.5
+    m_Output: 0
+    m_ColliderType: 0
+    m_RandomTransform: 0
+    m_RuleTransform: 2
+    _border_dir: 0
+    _specifier: L5
+    m_Neighbors_bucket:
+      keys:
+      - {x: 0, y: -1, z: 0}
+      - {x: -1, y: -1, z: 0}
+      - {x: -1, y: 0, z: 0}
+      - {x: -1, y: 1, z: 0}
+      - {x: 0, y: 1, z: 0}
+      - {x: 1, y: 1, z: 0}
+      values:
+      - _posotion: {x: 0, y: -1, z: 0}
+        _kind: 1
+        _specifier: 00
+      - _posotion: {x: -1, y: -1, z: 0}
+        _kind: 2
+        _specifier: 00
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
+        _specifier: 00
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
+        _specifier: 00
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
+        _specifier: 00
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
+        _specifier: 00
+  - m_Id: 5
+    m_Sprites:
+    - {fileID: -1870478748, guid: f3951d20c8adb41f7a2e65e710121f7d, type: 3}
+    m_GameObject: {fileID: 0}
+    m_MinAnimationSpeed: 1
+    m_MaxAnimationSpeed: 1
+    m_PerlinScale: 0.5
+    m_Output: 0
+    m_ColliderType: 2
+    m_RandomTransform: 0
+    m_RuleTransform: 2
+    _border_dir: 5
+    _specifier: L5
+    m_Neighbors_bucket:
+      keys:
+      - {x: -1, y: 0, z: 0}
+      - {x: 0, y: 1, z: 0}
+      - {x: 0, y: -1, z: 0}
+      values:
+      - _posotion: {x: -1, y: 0, z: 0}
+        _kind: 2
+        _specifier: 00
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
+        _specifier: 00
+      - _posotion: {x: 0, y: -1, z: 0}
+        _kind: 1
+        _specifier: 00
+  - m_Id: 11
+    m_Sprites:
+    - {fileID: 431645857, guid: f3951d20c8adb41f7a2e65e710121f7d, type: 3}
+    m_GameObject: {fileID: 0}
+    m_MinAnimationSpeed: 1
+    m_MaxAnimationSpeed: 1
+    m_PerlinScale: 0.5
+    m_Output: 0
+    m_ColliderType: 0
+    m_RandomTransform: 0
+    m_RuleTransform: 0
+    _border_dir: 3
+    _specifier: b4
+    m_Neighbors_bucket:
+      keys:
+      - {x: 0, y: 1, z: 0}
+      - {x: -1, y: 0, z: 0}
       - {x: -1, y: -1, z: 0}
       - {x: 0, y: -1, z: 0}
-      - {x: 0, y: -2, z: 0}
-      - {x: 0, y: -3, z: 0}
-      - {x: -1, y: -2, z: 0}
+      - {x: 1, y: -1, z: 0}
+      - {x: 1, y: 0, z: 0}
       values:
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 3
+        _specifier: b5
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 2
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
+        _specifier: 00
+  - m_Id: 3
+    m_Sprites:
+    - {fileID: 263148730, guid: f3951d20c8adb41f7a2e65e710121f7d, type: 3}
+    m_GameObject: {fileID: 0}
+    m_MinAnimationSpeed: 1
+    m_MaxAnimationSpeed: 1
+    m_PerlinScale: 0.5
+    m_Output: 0
+    m_ColliderType: 0
+    m_RandomTransform: 0
+    m_RuleTransform: 0
+    _border_dir: 7
+    _specifier: b5
+    m_Neighbors_bucket:
+      keys:
+      - {x: 0, y: -1, z: 0}
+      - {x: -1, y: 0, z: 0}
+      - {x: -1, y: 1, z: 0}
+      - {x: 0, y: 1, z: 0}
+      - {x: 1, y: 1, z: 0}
+      - {x: 1, y: 0, z: 0}
+      values:
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 2
+        _specifier: 00
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
+        _specifier: 00
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
+        _specifier: 00
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
+        _specifier: 00
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
+        _specifier: 00
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
   - m_Id: 7
     m_Sprites:
@@ -355,11 +396,14 @@ MonoBehaviour:
       - {x: -1, y: 0, z: 0}
       - {x: 0, y: 1, z: 0}
       values:
-      - _kind: 2
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 2
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
   - m_Id: 8
     m_Sprites:
@@ -385,19 +429,27 @@ MonoBehaviour:
       - {x: 1, y: -1, z: 0}
       - {x: 0, y: -1, z: 0}
       values:
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00

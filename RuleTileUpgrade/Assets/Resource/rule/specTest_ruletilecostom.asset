@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 921532b6a55814840899895428e84040, type: 3}
+  m_Name: specTest_ruletilecostom
+  m_EditorClassIdentifier: 
+  m_DefaultSprite: {fileID: 1328394848, guid: f3951d20c8adb41f7a2e65e710121f7d, type: 3}
+  m_DefaultGameObject: {fileID: 0}
+  m_DefaultColliderType: 1
+  AdjacentTiles: []
+  m_TilingRules:
+  - m_Id: 1
+    m_Sprites:
+    - {fileID: 21300000, guid: a4b1eae6bc7204f849a3952a8b40aa23, type: 3}
+    m_GameObject: {fileID: 0}
+    m_MinAnimationSpeed: 1
+    m_MaxAnimationSpeed: 1
+    m_PerlinScale: 0.5
+    m_Output: 0
+    m_ColliderType: 1
+    m_RandomTransform: 0
+    m_RuleTransform: 0
+    _border_dir: 0
+    _specifier: 00
+    m_Neighbors_bucket:
+      keys:
+      - {x: 0, y: 1, z: 0}
+      values:
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 3
+        _specifier: aa
+  - m_Id: 0
+    m_Sprites:
+    - {fileID: 21300000, guid: 3c982ad27792a4809a55e2b1f67b3f8c, type: 3}
+    m_GameObject: {fileID: 0}
+    m_MinAnimationSpeed: 1
+    m_MaxAnimationSpeed: 1
+    m_PerlinScale: 0.5
+    m_Output: 0
+    m_ColliderType: 1
+    m_RandomTransform: 0
+    m_RuleTransform: 0
+    _border_dir: 0
+    _specifier: aa
+    m_Neighbors_bucket:
+      keys: []
+      values: []
