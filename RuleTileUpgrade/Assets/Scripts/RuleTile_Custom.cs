@@ -415,14 +415,14 @@ namespace UnityEngine
             //public int _idx = -1; //추가된 순서 - 테스트/
             public Matrix4x4 _transform = Matrix4x4.identity;
             public TilingRule _tilingRule = null;
-            public Vector3 _ndir8 = Vector3.zero; //변형값이 적용된 arrows 경계 방향이 들어간다
+            //public Vector3 _ndir8 = Vector3.zero; //변형값이 적용된 arrows 경계 방향이 들어간다
 
             public void Init()
             {
                 //_idx = -1;
                 _transform = Matrix4x4.identity;
                 _tilingRule = null;
-                _ndir8 = Vector3.zero;
+                //_ndir8 = Vector3.zero;
             }
 
             //public enum eDirection8 : int
@@ -458,13 +458,18 @@ namespace UnityEngine
                 return _dir8_normal3D_AxisMZ[(int)eDirection];
             }
 
-            
-            public void ApplyData()
+
+
+            /// <summary>
+            /// 타일의 경계방향을 특정 좌표축 기준(Axis Minus Z)으로 단위벡터값으로 변화시켜 준다 
+            /// </summary>
+            /// <returns></returns>
+            public Vector3 Trans_BorderDir_AxisMZ()
             {
-                if (null == _tilingRule) return;
+                if (null == _tilingRule) return Vector3.zero;
 
                 Vector3 n = GetDir8_Normal3D_AxisMZ(_tilingRule._border_dir);
-                _ndir8 = _transform * n;
+                return _transform * n;
                 
             }
 
@@ -497,8 +502,8 @@ namespace UnityEngine
                 }
                 this[position] = data;
 
-                if (null != data)
-                    data.ApplyData();
+                //if (null != data)
+                //    data.ApplyData(); 
             }
 
             public void AddOrUpdate(Vector3Int position, TilingRule rule, Matrix4x4 transform)
@@ -526,7 +531,7 @@ namespace UnityEngine
 
                 getData._transform = transform;
                 getData._tilingRule = rule;
-                getData.ApplyData();
+                //getData.ApplyData();
             }
         }
 
@@ -1150,6 +1155,17 @@ namespace UnityEngine
         public virtual Vector3Int GetOffsetPositionReverse(Vector3Int position, Vector3Int offset)
         {
             return position - offset;
+        }
+
+        public void Debug_Print_BoderDir()
+        {
+            foreach (var pair in _tileDataMap)
+            {
+                
+                var t_rule = pair.Value._tilingRule;
+                
+                PrintText(pair.Key, Color.white, ""+ t_rule._border_dir);
+            }
         }
 
         public void Debug_TileDataMap()

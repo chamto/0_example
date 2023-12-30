@@ -38,8 +38,25 @@ public class Main : MonoBehaviour
     //void OnSceneGUI()
     {
 #if UNITY_EDITOR
-        //if (null != _ruleTile)
-        //    _ruleTile.Debug_TileDataMap();
+        if (null != _ruleTile)
+            _ruleTile.Debug_Print_BoderDir();
 #endif
     }
+
+    //public void LoadTilemap_Struct()
+    //{
+        
+    //    RuleTile_Custom.TilingRule ruleInfo = null;
+        
+    //    foreach (Vector3Int XY_2d in _tilemap.cellBounds.allPositionsWithin)
+    //    {
+    //        RuleTile_Custom ruleTile = _tilemap.GetTile(XY_2d) as RuleTile_Custom;
+    //        if (null == ruleTile) continue;
+
+    //        ruleInfo = ruleTile._tileDataMap.GetTilingRule(XY_2d);
+            
+
+    //    }
+
+    //}
 }
