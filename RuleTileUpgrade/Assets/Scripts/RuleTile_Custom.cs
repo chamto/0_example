@@ -1157,9 +1157,25 @@ namespace UnityEngine
             return position - offset;
         }
 
-        public void Debug_Print_BoderDir()
+        public void Debug_Print_BoderDir(Tilemap tilemap)
         {
-            foreach (var pair in _tileDataMap)
+            
+            foreach (Vector3Int XY_2d in tilemap.cellBounds.allPositionsWithin)
+            {
+                RuleTile_Custom ruleTile = tilemap.GetTile(XY_2d) as RuleTile_Custom;
+                if (null == ruleTile) continue;
+
+                Debug_Print_BoderDir(ruleTile);
+
+            }
+
+        }
+
+        public void Debug_Print_BoderDir(RuleTile_Custom ruleTile)
+        {
+            if (null == ruleTile) return;
+
+            foreach (var pair in ruleTile._tileDataMap)
             {
                 
                 var t_rule = pair.Value._tilingRule;

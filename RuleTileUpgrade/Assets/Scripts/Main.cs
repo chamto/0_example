@@ -47,26 +47,10 @@ public class Main : MonoBehaviour
             //_tilemap.RefreshAllTiles(); //chamto test - GetTileData 를 다시호출하여 TileData를 다시 설정한다.
             ////내부 AppointData 데이터가 남아있기 때문에 문자열비교 규칙타일에서 기존 데이터를 참조하는 문제가 있다
             ///
-            //_ruleTile.Debug_Print_BoderDir();
+            _ruleTile.Debug_Print_BoderDir(_tilemap);
             //_ruleTile.Debug_Print_TileSeq();
         }
 #endif
     }
 
-    //public void LoadTilemap_Struct()
-    //{
-        
-    //    RuleTile_Custom.TilingRule ruleInfo = null;
-        
-    //    foreach (Vector3Int XY_2d in _tilemap.cellBounds.allPositionsWithin)
-    //    {
-    //        RuleTile_Custom ruleTile = _tilemap.GetTile(XY_2d) as RuleTile_Custom;
-    //        if (null == ruleTile) continue;
-
-    //        ruleInfo = ruleTile._tileDataMap.GetTilingRule(XY_2d);
-            
-
-    //    }
-
-    //}
 }
