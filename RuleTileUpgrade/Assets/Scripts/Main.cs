@@ -17,6 +17,10 @@ public class Main : MonoBehaviour
         if (null != o)
         {
             _tilemap = o.GetComponent<Tilemap>();
+            _tilemap.RefreshAllTiles(); //타일그리기를 한번더 출력한다 
+            //Specifier_This(NotThis) 네이버모드일 경우 한번출력과 두번출력의 결과가 다르다.
+            //_specifier 의 지정 비교시 , 비교대상 룰타일의 우선순위가 아래에 있는 경우 한번출력에서는 비교대상이 없어서 선택이 안된다
+            //두번출력으로 비교대상이 미리 채워진 상태에서 지정자 비교를 할 수 있다 
         }
 
 
