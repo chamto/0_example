@@ -39,7 +39,11 @@ public class Main : MonoBehaviour
     {
 #if UNITY_EDITOR
         if (null != _ruleTile)
-            _ruleTile.Debug_Print_BoderDir();
+        {
+            //_tilemap.RefreshAllTiles(); //chamto test - GetTileData 를 다시호출하여 TileData를 다시 설정한다 
+            //_ruleTile.Debug_Print_BoderDir();
+            _ruleTile.Debug_Print_TileSeq();
+        }
 #endif
     }
 
