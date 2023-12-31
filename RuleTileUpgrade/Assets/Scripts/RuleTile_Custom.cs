@@ -412,7 +412,7 @@ namespace UnityEngine
         [Serializable]
         public class AppointData
         {
-            public int _seq = -1; //추가된 순서 - 테스트/
+            public int _seq = -1; //chamto test - 추가된 순서
             public Matrix4x4 _transform = Matrix4x4.identity;
             public TilingRule _tilingRule = null;
             //public Vector3 _ndir8 = Vector3.zero; //변형값이 적용된 arrows 경계 방향이 들어간다
@@ -514,8 +514,6 @@ namespace UnityEngine
                 {
                     getData = new AppointData();
                     getData.Init();
-                    //_count++;
-                    //getData._idx = _count;
                     this.Add(position, getData);
                 }
 
@@ -524,13 +522,12 @@ namespace UnityEngine
                 {
                     getData = new AppointData();
                     getData.Init();
-                    //_count++;
-                    //getData._idx = _count;
                     this.Add(position, getData);
                 }
 
-                _count++;
-                getData._seq = _count;
+                //chamto test 
+                //_count++;
+                //getData._seq = _count;
 
                 getData._transform = transform;
                 getData._tilingRule = rule;
