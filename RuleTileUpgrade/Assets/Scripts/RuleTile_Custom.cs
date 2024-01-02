@@ -477,7 +477,7 @@ namespace UnityEngine
 
         public class TileDataMap : Dictionary<Vector3Int, AppointData>
         {
-            private int _count = 0;
+            //private int _count = 0;
 
             public void InitData(Vector3Int position)
             {
@@ -1180,7 +1180,12 @@ namespace UnityEngine
                 
                 var t_rule = pair.Value._tilingRule;
                 
-                PrintText(pair.Key, Color.white, ""+ t_rule._border_dir);
+                //PrintText(pair.Key, Color.white, ""+ t_rule._border_dir);
+
+                Vector3 center = pair.Key;
+                center.x += 0.5f;
+                center.y += 0.5f;
+                DrawLine_BorderDirXY((eDirection8)t_rule._border_dir, 1, center);
             }
         }
 
@@ -1192,9 +1197,149 @@ namespace UnityEngine
                 var t_rule = pair.Value._tilingRule;
                 if (null != t_rule)
                     temp += t_rule._specifier;
+                
                 PrintText(pair.Key, Color.white, ""+ pair.Value._seq + " - " + temp);
                 
             }
+        }
+
+        public enum eDirection8 : int
+        {
+            none = 0,
+            center = none,
+            right = 1,
+            rightUp = 2,
+            up = 3,
+            leftUp = 4,
+            left = 5,
+            leftDown = 6,
+            down = 7,
+            rightDown = 8,
+            max,
+
+        }
+
+        public void DrawLine_BorderDirXY(eDirection8 eDir , float cellSize , Vector3 centerPos)
+        {
+            
+            if (eDirection8.none == eDir) return;
+
+                
+            float size = cellSize * 0.5f;
+            Vector3 origin = Vector3.zero , last = Vector3.zero , temp = centerPos;
+            switch (eDir)
+            {
+                case eDirection8.up:
+                    {
+                        temp.y = temp.y + size;
+                        temp.x = centerPos.x - size;
+                        origin = temp;
+
+                        temp.x = centerPos.x + size;
+                        last = temp;
+                    }
+                    break;
+                case eDirection8.down:
+                    {
+                        temp.y = temp.y - size;
+                        temp.x = centerPos.x - size;
+                        origin = temp;
+
+                        temp.x = centerPos.x + size;
+                        last = temp;
+
+                    }
+                    break;
+                case eDirection8.left:
+                    {
+                        temp.x = temp.x - size;
+                        temp.y = centerPos.y + size;
+                        origin = temp;
+
+                        temp.y = centerPos.y - size;
+                        last = temp;
+
+                    }
+                    break;
+                case eDirection8.right:
+                    {
+                        temp.x = temp.x + size;
+                        temp.y = centerPos.y + size;
+                        origin = temp;
+
+                        temp.y = centerPos.y - size;
+                        last = temp;
+
+                    }
+                    break;
+                case eDirection8.leftUp:
+                    {
+                           
+                        temp = centerPos;
+                        temp.x -= size;
+                        temp.y -= size;
+                        origin = temp;
+
+                        temp = centerPos;
+                        temp.x += size;
+                        temp.y += size;
+                        last = temp;
+
+                    }
+                    break;
+                case eDirection8.rightUp:
+                    {
+                            
+                        temp = centerPos;
+                        temp.x -= size;
+                        temp.y += size;
+                        origin = temp;
+
+                        temp = centerPos;
+                        temp.x += size;
+                        temp.y -= size;
+                        last = temp;
+
+
+                    }
+                    break;
+                case eDirection8.leftDown:
+                    {
+                           
+                        temp = centerPos;
+                        temp.x -= size;
+                        temp.y += size;
+                        origin = temp;
+
+                        temp = centerPos;
+                        temp.x += size;
+                        temp.y -= size;
+                        last = temp;
+
+                    }
+                    break;
+                case eDirection8.rightDown:
+                    {
+                            
+                        temp = centerPos;
+                        temp.x -= size;
+                        temp.y -= size;
+                        origin = temp;
+
+                        temp = centerPos;
+                        temp.x += size;
+                        temp.y += size;
+                        last = temp;
+
+                    }
+                    break;
+
+            }//end switch
+
+
+            DrawLine(origin, last, Color.white);
+
+            
         }
 
         public void PrintText(Vector3 pos, Color cc, string text)
@@ -1206,6 +1351,14 @@ namespace UnityEngine
             UnityEditor.Handles.BeginGUI();
             UnityEditor.Handles.Label(pos, text, style);
             UnityEditor.Handles.EndGUI();
+#endif
+        }
+
+        public void DrawLine(Vector3 start, Vector3 end, Color cc)
+        {
+#if UNITY_EDITOR
+            Gizmos.color = cc;
+            Gizmos.DrawLine(start, end);
 #endif
         }
     }
