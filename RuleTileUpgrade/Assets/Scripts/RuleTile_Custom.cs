@@ -427,6 +427,22 @@ namespace UnityEngine
 
         // custom 추가 정보 
         //------------------------------------------------------------------------------------------
+
+        public int GetBorderDirection8(Vector3Int position)
+        {
+            AppointData getData = null;
+            if (false == this._tileDataMap.TryGetValue(position, out getData))
+            {
+                return 0;
+            }
+
+            if (null == getData || null == getData._tilingRule)
+                return 0;
+
+
+            return (int)getData._transForDir8;
+        }
+
         [Serializable]
         public class AppointData
         {
