@@ -9,6 +9,7 @@ using UnityEngine.Serialization;
 
 namespace UnityEngine
 {
+
     /// <summary>
     /// Generic visual tile for creating different tilesets like terrain, pipeline, random or animated tiles.
     /// This is templated to accept a Neighbor Rule Class for Custom Rules.
@@ -221,6 +222,23 @@ namespace UnityEngine
             /// </summary>
             public Transform m_RuleTransform;
 
+
+            public enum eDirection8 : int
+            {
+                none = 0,
+                center = none,
+                right = 1,
+                rightUp = 2,
+                up = 3,
+                leftUp = 4,
+                left = 5,
+                leftDown = 6,
+                down = 7,
+                rightDown = 8,
+                max,
+
+            }
+
             //------------------------------------------------------------------------------------------
             // custom 추가 정보 
             //------------------------------------------------------------------------------------------
@@ -415,14 +433,14 @@ namespace UnityEngine
             public int _seq = -1; //chamto test - 추가된 순서
             public Matrix4x4 _transform = Matrix4x4.identity;
             public TilingRule _tilingRule = null;
-            //public Vector3 _ndir8 = Vector3.zero; //변형값이 적용된 arrows 경계 방향이 들어간다
+            public TilingRule.eDirection8 _transForDir8 = 0; //변형값이 적용된 arrows 경계 방향이 들어간다
 
             public void Init()
             {
                 //_idx = -1;
                 _transform = Matrix4x4.identity;
                 _tilingRule = null;
-                //_ndir8 = Vector3.zero;
+                _transForDir8 = 0;
             }
 
             //public enum eDirection8 : int
@@ -458,7 +476,25 @@ namespace UnityEngine
                 return _dir8_normal3D_AxisMZ[(int)eDirection];
             }
 
+            public TilingRule.eDirection8 GetDir8_AxisMZ(Vector3 dir)
+            {
+                float dot = dir.x * dir.x + dir.y * dir.y;
+                if (float.Epsilon >= dot) return TilingRule.eDirection8.none;
+                //if (Misc.IsZero(dir)) return eDirection8.none;
 
+                float rad = (float)Math.Atan2(dir.y, dir.x);
+                float deg = Mathf.Rad2Deg * rad;
+
+                //각도가 음수라면 360을 더한다 
+                if (deg < 0) deg += 360f;
+
+                //360 / 45 = 8
+                int quad = Mathf.RoundToInt(deg / 45f);
+                quad %= 8; //8 => 0 , 8을 0으로 변경  
+                quad++; //값의 범위를 0~7 에서 1~8로 변경 
+
+                return (TilingRule.eDirection8)quad;
+            }
 
             /// <summary>
             /// 타일의 경계방향을 특정 좌표축 기준(Axis Minus Z)으로 단위벡터값으로 변화시켜 준다 
@@ -471,6 +507,18 @@ namespace UnityEngine
                 Vector3 n = GetDir8_Normal3D_AxisMZ(_tilingRule._border_dir);
                 return _transform * n;
                 
+            }
+
+            public void ApplyData()
+            {
+                if (null == _tilingRule) return;
+
+                //if (UtilGS9.eDirection8.none != tilingRule._push_dir8) return;
+
+                Vector3 tn = Trans_BorderDir_AxisMZ();
+                _transForDir8 = GetDir8_AxisMZ(tn);
+
+                //DebugWide.LogBlue(n + "   " + tn + "    " + eTransDir);
             }
 
         }
@@ -531,7 +579,7 @@ namespace UnityEngine
 
                 getData._transform = transform;
                 getData._tilingRule = rule;
-                //getData.ApplyData();
+                getData.ApplyData();
             }
         }
 
@@ -1178,14 +1226,14 @@ namespace UnityEngine
             foreach (var pair in ruleTile._tileDataMap)
             {
                 
-                var t_rule = pair.Value._tilingRule;
+                //var t_rule = pair.Value._tilingRule;
                 
                 //PrintText(pair.Key, Color.white, ""+ t_rule._border_dir);
 
                 Vector3 center = pair.Key;
                 center.x += 0.5f;
                 center.y += 0.5f;
-                DrawLine_BorderDirXY((eDirection8)t_rule._border_dir, 1, center);
+                DrawLine_BorderDirXY(pair.Value._transForDir8, 1, center);
             }
         }
 
@@ -1203,33 +1251,17 @@ namespace UnityEngine
             }
         }
 
-        public enum eDirection8 : int
-        {
-            none = 0,
-            center = none,
-            right = 1,
-            rightUp = 2,
-            up = 3,
-            leftUp = 4,
-            left = 5,
-            leftDown = 6,
-            down = 7,
-            rightDown = 8,
-            max,
-
-        }
-
-        public void DrawLine_BorderDirXY(eDirection8 eDir , float cellSize , Vector3 centerPos)
+        public void DrawLine_BorderDirXY(TilingRule.eDirection8 eDir , float cellSize , Vector3 centerPos)
         {
             
-            if (eDirection8.none == eDir) return;
+            if (TilingRule.eDirection8.none == eDir) return;
 
                 
             float size = cellSize * 0.5f;
             Vector3 origin = Vector3.zero , last = Vector3.zero , temp = centerPos;
             switch (eDir)
             {
-                case eDirection8.up:
+                case TilingRule.eDirection8.up:
                     {
                         temp.y = temp.y + size;
                         temp.x = centerPos.x - size;
@@ -1239,7 +1271,7 @@ namespace UnityEngine
                         last = temp;
                     }
                     break;
-                case eDirection8.down:
+                case TilingRule.eDirection8.down:
                     {
                         temp.y = temp.y - size;
                         temp.x = centerPos.x - size;
@@ -1250,7 +1282,7 @@ namespace UnityEngine
 
                     }
                     break;
-                case eDirection8.left:
+                case TilingRule.eDirection8.left:
                     {
                         temp.x = temp.x - size;
                         temp.y = centerPos.y + size;
@@ -1261,7 +1293,7 @@ namespace UnityEngine
 
                     }
                     break;
-                case eDirection8.right:
+                case TilingRule.eDirection8.right:
                     {
                         temp.x = temp.x + size;
                         temp.y = centerPos.y + size;
@@ -1272,7 +1304,7 @@ namespace UnityEngine
 
                     }
                     break;
-                case eDirection8.leftUp:
+                case TilingRule.eDirection8.leftUp:
                     {
                            
                         temp = centerPos;
@@ -1287,7 +1319,7 @@ namespace UnityEngine
 
                     }
                     break;
-                case eDirection8.rightUp:
+                case TilingRule.eDirection8.rightUp:
                     {
                             
                         temp = centerPos;
@@ -1303,7 +1335,7 @@ namespace UnityEngine
 
                     }
                     break;
-                case eDirection8.leftDown:
+                case TilingRule.eDirection8.leftDown:
                     {
                            
                         temp = centerPos;
@@ -1318,7 +1350,7 @@ namespace UnityEngine
 
                     }
                     break;
-                case eDirection8.rightDown:
+                case TilingRule.eDirection8.rightDown:
                     {
                             
                         temp = centerPos;

@@ -37,13 +37,17 @@ MonoBehaviour:
       - {x: 0, y: -1, z: 0}
       - {x: 1, y: 0, z: 0}
       values:
-      - _kind: 2
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 2
         _specifier: 00
-      - _kind: 2
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 2
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
   - m_Id: 1
     m_Sprites:
@@ -67,17 +71,23 @@ MonoBehaviour:
       - {x: 1, y: -1, z: 0}
       - {x: 1, y: 0, z: 0}
       values:
-      - _kind: 2
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 2
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
   - m_Id: 10
     m_Sprites:
@@ -90,7 +100,7 @@ MonoBehaviour:
     m_ColliderType: 0
     m_RandomTransform: 0
     m_RuleTransform: 2
-    _border_dir: 6
+    _border_dir: 5
     _specifier: 00
     m_Neighbors_bucket:
       keys:
@@ -99,13 +109,17 @@ MonoBehaviour:
       - {x: 0, y: -3, z: 0}
       - {x: -1, y: -2, z: 0}
       values:
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 2
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 2
         _specifier: 00
-      - _kind: 2
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 2
         _specifier: 00
   - m_Id: 9
     m_Sprites:
@@ -118,7 +132,7 @@ MonoBehaviour:
     m_ColliderType: 0
     m_RandomTransform: 0
     m_RuleTransform: 2
-    _border_dir: 0
+    _border_dir: 5
     _specifier: 00
     m_Neighbors_bucket:
       keys:
@@ -129,17 +143,23 @@ MonoBehaviour:
       - {x: -1, y: -1, z: 0}
       - {x: 0, y: -2, z: 0}
       values:
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 2
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 2
         _specifier: 00
-      - _kind: 2
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 2
         _specifier: 00
   - m_Id: 2
     m_Sprites:
@@ -162,15 +182,20 @@ MonoBehaviour:
       - {x: 1, y: 1, z: 0}
       - {x: 1, y: 0, z: 0}
       values:
-      - _kind: 2
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 2
         _specifier: 00
-      - _kind: 2
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 2
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
   - m_Id: 11
     m_Sprites:
@@ -195,19 +220,26 @@ MonoBehaviour:
       - {x: 1, y: 0, z: 0}
       - {x: 0, y: -2, z: 0}
       values:
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 2
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 2
         _specifier: 00
   - m_Id: 3
     m_Sprites:
@@ -231,17 +263,23 @@ MonoBehaviour:
       - {x: 1, y: 1, z: 0}
       - {x: 1, y: 0, z: 0}
       values:
-      - _kind: 2
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 2
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
   - m_Id: 4
     m_Sprites:
@@ -254,7 +292,7 @@ MonoBehaviour:
     m_ColliderType: 0
     m_RandomTransform: 0
     m_RuleTransform: 2
-    _border_dir: 0
+    _border_dir: 5
     _specifier: 00
     m_Neighbors_bucket:
       keys:
@@ -266,19 +304,26 @@ MonoBehaviour:
       - {x: 1, y: 1, z: 0}
       - {x: 0, y: -2, z: 0}
       values:
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 2
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 2
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
   - m_Id: 5
     m_Sprites:
@@ -299,11 +344,14 @@ MonoBehaviour:
       - {x: 0, y: 1, z: 0}
       - {x: 0, y: -1, z: 0}
       values:
-      - _kind: 2
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 2
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
   - m_Id: 6
     m_Sprites:
@@ -316,7 +364,7 @@ MonoBehaviour:
     m_ColliderType: 2
     m_RandomTransform: 0
     m_RuleTransform: 2
-    _border_dir: 0
+    _border_dir: 5
     _specifier: 00
     m_Neighbors_bucket:
       keys:
@@ -326,15 +374,20 @@ MonoBehaviour:
       - {x: 0, y: -3, z: 0}
       - {x: -1, y: -2, z: 0}
       values:
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 2
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 2
         _specifier: 00
   - m_Id: 7
     m_Sprites:
@@ -355,11 +408,14 @@ MonoBehaviour:
       - {x: -1, y: 0, z: 0}
       - {x: 0, y: 1, z: 0}
       values:
-      - _kind: 2
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 2
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
   - m_Id: 8
     m_Sprites:
@@ -385,19 +441,27 @@ MonoBehaviour:
       - {x: 1, y: -1, z: 0}
       - {x: 0, y: -1, z: 0}
       values:
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00
-      - _kind: 1
+      - _posotion: {x: 0, y: 0, z: 0}
+        _kind: 1
         _specifier: 00

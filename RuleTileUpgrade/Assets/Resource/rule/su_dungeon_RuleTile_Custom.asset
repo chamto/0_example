@@ -100,7 +100,7 @@ MonoBehaviour:
     m_ColliderType: 0
     m_RandomTransform: 0
     m_RuleTransform: 2
-    _border_dir: 6
+    _border_dir: 5
     _specifier: L5
     m_Neighbors_bucket:
       keys:
@@ -136,7 +136,7 @@ MonoBehaviour:
     m_ColliderType: 0
     m_RandomTransform: 0
     m_RuleTransform: 2
-    _border_dir: 0
+    _border_dir: 5
     _specifier: s4
     m_Neighbors_bucket:
       keys:
@@ -204,7 +204,7 @@ MonoBehaviour:
     m_ColliderType: 2
     m_RandomTransform: 0
     m_RuleTransform: 2
-    _border_dir: 0
+    _border_dir: 5
     _specifier: 00
     m_Neighbors_bucket:
       keys:
@@ -240,7 +240,7 @@ MonoBehaviour:
     m_ColliderType: 0
     m_RandomTransform: 0
     m_RuleTransform: 2
-    _border_dir: 0
+    _border_dir: 5
     _specifier: L5
     m_Neighbors_bucket:
       keys:
